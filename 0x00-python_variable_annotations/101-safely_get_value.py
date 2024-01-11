@@ -2,11 +2,11 @@
 """Augment the following code with the correct duck-typed annotations:
 
 """
-from typing import Dict, Optional, Any, TypeVar, Union
+from typing import Dict, Optional, Any, TypeVar, Union, Mapping
 T = TypeVar('T')
 
 
-def safely_get_value(dct: Dict, key: Any, default:
+def safely_get_value(dct: Mapping, key: Any, default:
                      Union[T, None]) -> Union[Any, T]:
     if key in dct:
         return dct[key]
