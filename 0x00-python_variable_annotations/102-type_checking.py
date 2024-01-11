@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Type Checking"""
-from typing import List, Union
+from typing import List, Union, Tuple
 
 
-def zoom_array(lst: List, factor: int = 2) -> List:
+def zoom_array(lst: Tuple, factor: int = 2) -> List:
     """Type Checking"""
     zoomed_in: List = [
         item for item in lst
@@ -12,7 +12,7 @@ def zoom_array(lst: List, factor: int = 2) -> List:
     return zoomed_in
 
 
-array = [12, 72, 91]
+array = (12, 72, 91)
 
 zoom_2x = zoom_array(array)
 
