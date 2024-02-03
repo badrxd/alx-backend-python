@@ -7,6 +7,7 @@ access_nested_map = __import__('utils').access_nested_map
 class TestAccessNestedMap(unittest.TestCase):
 
     def test_access_nested_map(self):
+        '''unit test for access_nested_map methodes'''
         self.assertEqual(access_nested_map({"a": {"b": 2}}, ("a", "b")), 2)
 
 
