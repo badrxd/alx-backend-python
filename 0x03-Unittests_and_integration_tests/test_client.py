@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+'''unit test for client methodes'''
+from client import GithubOrgClient
+from utils import get_json
+from parameterized import parameterized  # type: ignore
+import unittest
+from unittest.mock import patch, Mock
+
+
+class TestGithubOrgClient(unittest.TestCase):
+    '''TestGithubOrgClient class'''
+
+    @parameterized.expand(["google", "abc"])
+    @patch('client.get_json',)
+    def test_org(self, org: str, get_json: Mock) -> None:
+        '''method test that GithubOrgClient.org
+        returns the correct value.'''
+        data = Mock()
+        data.return_value = {'org': org}
+        get_json.return_value = data
+        client = GithubOrgClient(org)
+        test_1 = client.org()
+        test_2 = client.org()
+        self.assertEqual(test_1, test_2)
+        get_json.assert_called_once_with(
+            f"https://api.github.com/orgs/{org}")
+
+
+if __name__ == "__main__":
+    unittest.main()
