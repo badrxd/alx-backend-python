@@ -44,6 +44,7 @@ class TestGithubOrgClient(unittest.TestCase):
             self.assertEqual(call, ['badr', 'badrxd'])
             self.assertIsInstance(call, list)
             url.assert_called_once()
+            payload.assert_called_once()
 
 
 if __name__ == "__main__":
