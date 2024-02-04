@@ -4,7 +4,7 @@ from client import GithubOrgClient
 from utils import get_json
 from parameterized import parameterized  # type: ignore
 import unittest
-from unittest.mock import patch, Mock, PropertyMock
+from unittest.mock import patch, Mock, PropertyMock, MagicMock
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -32,6 +32,18 @@ class TestGithubOrgClient(unittest.TestCase):
                 "repos_url": "https://api.github.com/users/google/repos"}
             url = GithubOrgClient('google')._public_repos_url
             self.assertEqual(url, "https://api.github.com/users/google/repos")
+
+    @patch('client.get_json')
+    def test_public_repos(self, payload):
+        data = MagicMock(return_value=[{'name': "badr"}, {"name": "badrxd"}])
+        payload.return_value = data()
+        with patch.object(GithubOrgClient, '_public_repos_url',
+                          new_callable=PropertyMock) as url:
+            url.return_value = "https://api.github.com/users/google/repos"
+            call = GithubOrgClient('google').public_repos()
+            self.assertEqual(call, ['badr', 'badrxd'])
+            self.assertIsInstance(call, list)
+            url.assert_called_once()
 
 
 if __name__ == "__main__":

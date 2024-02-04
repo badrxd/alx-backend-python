@@ -44,7 +44,6 @@ class GithubOrgClient:
             repo["name"] for repo in json_payload
             if license is None or self.has_license(repo, license)
         ]
-
         return public_repos
 
     @staticmethod
