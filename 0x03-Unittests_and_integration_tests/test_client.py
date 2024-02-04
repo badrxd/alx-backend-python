@@ -34,7 +34,8 @@ class TestGithubOrgClient(unittest.TestCase):
             self.assertEqual(url, "https://api.github.com/users/google/repos")
 
     @patch('client.get_json')
-    def test_public_repos(self, payload):
+    def test_public_repos(self, payload: MagicMock) -> None:
+        '''Tests the public_repos method'''
         data = MagicMock(return_value=[{'name': "badr"}, {"name": "badrxd"}])
         payload.return_value = data()
         with patch.object(GithubOrgClient, '_public_repos_url',
