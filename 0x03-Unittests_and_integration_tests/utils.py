@@ -44,7 +44,6 @@ def get_json(url: str) -> Dict:
     """Get JSON from remote URL.
     """
     response = requests.get(url)
-    # print(response.json())
     return response.json()
 
 

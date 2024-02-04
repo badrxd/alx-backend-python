@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''unit test for utils methodes'''
-from utils import get_json
+from utils import get_json, memoize
 from parameterized import parameterized
 import unittest
 from unittest.mock import patch, Mock
@@ -39,6 +39,25 @@ class TestGetJson(unittest.TestCase):
         get_json_pld.return_value = sent_req
         self.assertEqual(get_json(test_url)['payload'], test_payload)
         get_json_pld.assert_called_with(test_url)
+
+
+class TestMemoize(unittest.TestCase):
+    def test_memoize(self):
+
+        class TestClass:
+            def a_method(self):
+                return 42
+
+            @memoize
+            def a_property(self):
+                return self.a_method()
+
+        with patch.object(TestClass, 'a_method', return_value=42) as mock_a_method:
+            call = TestClass()
+            self.assertEqual(call.a_property, 42)
+            mock_a_method.assert_called_once()
+            self.assertEqual(call.a_property, 42)
+            mock_a_method.assert_called_once()
 
 
 if __name__ == '__main__':
