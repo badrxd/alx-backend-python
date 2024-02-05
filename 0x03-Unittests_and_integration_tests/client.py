@@ -44,6 +44,7 @@ class GithubOrgClient:
             repo["name"] for repo in json_payload
             if license is None or self.has_license(repo, license)
         ]
+
         return public_repos
 
     @staticmethod
@@ -51,8 +52,7 @@ class GithubOrgClient:
         """Static: has_license"""
         assert license_key is not None, "license_key cannot be None"
         try:
-            has_license = access_nested_map(
-                repo, ("license", "key")) == license_key
+            has_license = access_nested_map(repo, ("license", "key")) == license_key
         except KeyError:
             return False
         return has_license
