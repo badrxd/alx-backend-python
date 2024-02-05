@@ -64,11 +64,11 @@ class TestGithubOrgClient(unittest.TestCase):
      'apache2_repos': TEST_PAYLOAD[0][3]}
 ])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    ''''''
+    '''TestGithubOrgClient class'''
     @classmethod
     def setUpClass(cls):
 
-        def return_pld(url):
+        def return_pld(url) -> Mock:
             data = None
             if url == 'https://api.github.com/orgs/google':
                 data = cls.org_payload
@@ -81,10 +81,13 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         cls.get_patcher = patch('requests.get', side_effect=return_pld)
         cls.get_patcher.start()
 
-    def test_public_repos(self):
+    def test_public_repos(self) -> None:
         client = GithubOrgClient('google')
-        ls = client.public_repos()
-        self.assertEqual(ls, self.expected_repos)
+        self.assertEqual(client.public_repos(), self.expected_repos)
+
+    def test_public_repos_with_license(self) -> None:
+        client = GithubOrgClient('google')
+        self.assertEqual(client.public_repos('apache-2.0'), self.apache2_repos)
 
     @classmethod
     def tearDownClass(cls):
