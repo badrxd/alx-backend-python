@@ -66,7 +66,7 @@ class TestGithubOrgClient(unittest.TestCase):
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     '''TestGithubOrgClient class'''
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         """init the class"""
 
         def return_pld(url) -> Mock:
@@ -94,7 +94,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         self.assertEqual(client.public_repos('apache-2.0'), self.apache2_repos)
 
     @classmethod
-    def tearDownClass(cls):
+    def tearDownClass(cls) -> None:
         """Removes the class"""
         cls.get_patcher.stop()
 
